@@ -33,7 +33,6 @@ class Core
 			}
 			else
 			{
-				//Get window surface
 				screenSurface = SDL_GetWindowSurface( window );
 
 				//Fill the surface white
@@ -59,4 +58,22 @@ class Core
 		//Update the surface
 		SDL_UpdateWindowSurface( window );
 	}
+	
+	void loadImage(SDL_Surface* image)
+	{
+		SDL_BlitSurface( image, NULL, screenSurface, NULL );
+	}
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
