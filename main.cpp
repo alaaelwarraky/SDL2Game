@@ -4,7 +4,7 @@ int main( int argc, char* args[] )
 {
 	Core myGame;
 	
-	Background background(myGame);
+	myGame.loadBackground();
 	
 	myGame.updateSurface();
 

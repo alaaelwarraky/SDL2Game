@@ -6,13 +6,15 @@ class Core
 {
 	private:
 		//Screen dimension constants
-		const int SCREEN_WIDTH = 640;
-		const int SCREEN_HEIGHT = 480;
+		int SCREEN_WIDTH = 1073;
+		int SCREEN_HEIGHT = 571;
 		
 		//The window we'll be rendering to
 		SDL_Window* window = NULL;
 		//The surface contained by the window
 		SDL_Surface* screenSurface = NULL;
+		//The image we will load and show on the screen
+		SDL_Surface* HelloWorld = NULL;
 	public:
 	
 	Core()
@@ -34,9 +36,6 @@ class Core
 			else
 			{
 				screenSurface = SDL_GetWindowSurface( window );
-
-				//Fill the surface white
-				SDL_FillRect( screenSurface, NULL, SDL_MapRGB( screenSurface->format, 0xFF, 0xFF, 0xFF ) );
 			}
 		}
 	}
@@ -45,6 +44,9 @@ class Core
 	{
 		//Wait two seconds
 		SDL_Delay( 2000 );
+		
+		SDL_FreeSurface( HelloWorld );
+		HelloWorld = NULL;
 		
 		//Destroy window
 		SDL_DestroyWindow( window );
@@ -59,9 +61,14 @@ class Core
 		SDL_UpdateWindowSurface( window );
 	}
 	
-	void loadImage(SDL_Surface* image)
+	void loadBackground()
 	{
-		SDL_BlitSurface( image, NULL, screenSurface, NULL );
+		HelloWorld = SDL_LoadBMP( "assets/Board.bmp" );
+		
+		if( HelloWorld == NULL )
+			printf( "Unable to load image %s! SDL Error: %s\n", "assets/Board.bmp", SDL_GetError() );
+		
+		SDL_BlitSurface( HelloWorld, NULL, screenSurface, NULL );
 	}
 };
 
