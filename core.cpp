@@ -1,6 +1,8 @@
 //Using SDL and standard IO
-#include<SDL2/SDL.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <stdio.h>
+#include <iostream>
 
 class Core
 {
@@ -15,6 +17,32 @@ class Core
 		SDL_Surface* screenSurface = NULL;
 		//The image we will load and show on the screen
 		SDL_Surface* HelloWorld = NULL;
+		
+		SDL_Surface* loadSurface( std::string path )
+		{
+			//The final optimized image
+			SDL_Surface* optimizedSurface = NULL;
+		
+			//Load image at specified path
+			SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
+		
+			if( loadedSurface == NULL )
+				printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
+			else
+			{
+				//Convert surface to screen format
+				optimizedSurface = SDL_ConvertSurface( loadedSurface, screenSurface->format, NULL );
+			
+				if( optimizedSurface == NULL )
+					printf( "Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
+			
+				//Get rid of old loaded surface
+				SDL_FreeSurface( loadedSurface );
+			}
+			
+			return optimizedSurface;
+		}
+		
 	public:
 	
 	Core()
@@ -30,20 +58,14 @@ class Core
 			SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
 			
 			if( window == NULL )
-			{
-				printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
-			}
+				printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
 			else
-			{
 				screenSurface = SDL_GetWindowSurface( window );
-			}
 		}
 	}
 	
 	~Core()
 	{
-		//Wait two seconds
-		SDL_Delay( 2000 );
 		
 		SDL_FreeSurface( HelloWorld );
 		HelloWorld = NULL;
@@ -63,10 +85,10 @@ class Core
 	
 	void loadBackground()
 	{
-		HelloWorld = SDL_LoadBMP( "assets/Board.bmp" );
+		HelloWorld = loadSurface("assets/Board.png");
 		
 		if( HelloWorld == NULL )
-			printf( "Unable to load image %s! SDL Error: %s\n", "assets/Board.bmp", SDL_GetError() );
+			printf( "Unable to load image %s! SDL Error: %s\n", "assets/Board.png", SDL_GetError() );
 		
 		SDL_BlitSurface( HelloWorld, NULL, screenSurface, NULL );
 	}
