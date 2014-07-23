@@ -1,6 +1,6 @@
-#include "core.h"
+#include "Board.h"
 
-SDL_Surface* Core::loadSurface( std::string path )
+SDL_Surface* Board::loadSurface( std::string path )
 {
 	//The final optimized image
 	SDL_Surface* optimizedSurface = NULL;
@@ -25,7 +25,7 @@ SDL_Surface* Core::loadSurface( std::string path )
 	return optimizedSurface;
 }
 
-Core::Core()
+Board::Board()
 {
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
 		printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
@@ -42,7 +42,7 @@ Core::Core()
 	}
 }
 
-Core::~Core()
+Board::~Board()
 {
 		
 	SDL_FreeSurface( HelloWorld );
@@ -55,13 +55,13 @@ Core::~Core()
 	SDL_Quit();
 }	
 	
-void Core::updateSurface()
+void Board::updateSurface()
 {
 	//Update the surface
 	SDL_UpdateWindowSurface( window );
 }
 
-void Core::loadBackground()
+void Board::loadBackground()
 {
 	HelloWorld = loadSurface("assets/Board.png");
 	

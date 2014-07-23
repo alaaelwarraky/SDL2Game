@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <iostream>
 
-class Core
+class Board
 {
 	private:
 		//Screen dimension constants
@@ -23,9 +23,9 @@ class Core
 		
 	public:
 	
-	Core();
+	Board();
 	
-	~Core();
+	~Board();
 	
 	void updateSurface();
 	

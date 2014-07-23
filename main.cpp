@@ -1,4 +1,4 @@
-#include "core.h"
+#include "Board.h"
 
 int main( int argc, char* args[] )
 {
@@ -7,7 +7,7 @@ int main( int argc, char* args[] )
 	//Event handler
 	SDL_Event e;
 	
-	Core myGame;
+	Board myGame;
 	
 	myGame.loadBackground();
 	
